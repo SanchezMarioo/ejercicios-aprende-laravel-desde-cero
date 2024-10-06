@@ -54,20 +54,18 @@ class ProductController extends Controller
 
     }
     public function index()
-{
-    $products = auth()->user()->products;
+    {
+        $products = auth()->user()->products;
 
-    return response()->json([
-        'products' => $products,
-    ]);
-}
+        return response()->json([
+            'products' => $products,
+        ]);
+    }
+
     public function show(Product $product)
     {
-        if ($product->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('view', $product);
     
-        return response()->json($product);
+        return response()->json(compact('product'));
     }
 }
-
