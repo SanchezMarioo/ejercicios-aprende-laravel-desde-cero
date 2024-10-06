@@ -15,12 +15,11 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->string('price');
+            $table->string('name', 64);
+            $table->string('description', 512);
+            $table->integer('price')->unsigned();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamp('last_used_at')->nullable();
             $table->timestamps();
         });
     }
